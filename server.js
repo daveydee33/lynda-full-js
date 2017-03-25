@@ -1,4 +1,5 @@
 import config from './config';
+import fs from 'fs';
 
 import express from 'express';
 const server = express();
@@ -7,8 +8,11 @@ server.get('/', (req, res) => {
   res.send('Hello Express');
 });
 
+// using fs to return an html page (but we'll improve this!)
 server.get('/about', (req, res) => {
-  res.send('About page...');
+  fs.readFile('./about.html', (err, data) => {
+    res.send(data.toString());
+  });
 });
 
 server.listen(config.port, () => {
@@ -16,6 +20,6 @@ server.listen(config.port, () => {
 })
 
 // run this now (can use: npm start)
-// open a browswer and access localhost/8080
+// open a browswer and access http://localhost:8080
 // "Hello Express" is printed on screen.
-// There's alternative (better) ways to do this.
+// open http://localhost:8080/about and get the about HTML file.
