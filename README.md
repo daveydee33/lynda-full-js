@@ -197,7 +197,7 @@ module.exports = {
 
 
 
-# Node as a Web Server
+# 2. Node as a Web Server
 
 ## Modules
 
@@ -321,7 +321,8 @@ https.get('https://www.lynda.com', res => {
 // the callback for this 'get' method receives a response stream.  we can read methods like statusCode on this stream.  we can listen for data events on that stream.  every event will give us a chunk buffer so we can read its content with a twoString call. To test this we can babel-node the file and let's pipe the output to less to paginate it because it's going to be big.
 ```
 
-## using HTTPS as a client to retrieve a URL `test_http_get.js`
+## using HTTPS as a client to retrieve a URL 
+`test_http_get.js`
 ```javascript
 // using http for a GET request
 import https from 'https';
@@ -346,7 +347,8 @@ https.get('https://www.lynda.com', res => {
 this will retrieve a URL and then spit out a couple lines I used for testing, and then the body of the URL.
 
 
-## using HTTP as a server `test_http_server.js`
+## using HTTP as a server 
+`test_http_server.js`
 
 ```javascript
 // using http for a SERVER
@@ -367,3 +369,50 @@ server.on('request', (req,res) => {
 
 use curl, or open browser and access http://localhost:8080
 It will print the first line, and then after 3 seconds it will print the second line.
+
+
+# Using Express.js
+[Express (Express.js)](https://www.google.com.au/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0ahUKEwiOvMOXvPHSAhURNpQKHZWSA2oQFggbMAA&url=https%3A%2F%2Fexpressjs.com%2F&usg=AFQjCNHy74oAb0RFvqjXp9M6Up98vJ_pnA)
+
+Let's do the same thing we did with core HTTP module, now in Express
+
+## Creating an Express server
+### import Express
+We just need to import Express and then to create server with it,  we just invoke the imported Express variable as a function. If you read the source code of the Express package, you'll find out that the default export there is just a function, similar to the HTTP module. We also do a .listen method on the Express server. I'll read the port from the configuration file this time.
+
+```javascript
+import express from 'express';
+const server = express();
+
+server.listen();
+```
+
+We'll improve this, but for a reference point for starting with Express
+```javascript
+// so we can get the port # to run on
+import config from './config';
+
+import express from 'express';
+const server = express();
+
+// to get a page
+server.get('/', (req, res) => {
+  res.send('Hello Express');
+});
+
+// to get another page
+server.get('/about', (req, res) => {
+  res.send('About page...');
+});
+
+// run the server
+server.listen(config.port, () => {
+  console.info('Express listening on port: ', config.port);
+})
+
+// run this now (can use: npm start)
+// open a browswer and access http://localhost:8080
+// "Hello Express" is printed on screen.
+// open http://localhost:8080/about and get the about response.
+
+```
