@@ -94,4 +94,103 @@ touch public/index.html
 mkdir api
 touch api/index.js
 # directory for backend API server.
+
+touch server.js
+# the starting point for our application (?)
+```
+
+- src
+- src/index.js
+- public
+- public/index.html
+- api
+- api/index.js
+- server.js
+
+
+# Add a start script to the `package.json` file - with `nodemon`
+
+```javascript
+  "scripts": {
+    "start": "nodemon --exec babel-node server.js --ignore public/",
+    "dev": "webpack -wd"
+  },
+```
+## nodemon
+We're using `nodemon` to start the server so that it will watch for any modified files that require a server restart, and will automatically restart the server for us.
+
+> Normally we'd have to stop/start many times with: 
+`
+node server.js
+`
+
+So we're going to use the `nodemon` execution wrapper and use babel-node instead of node.
+
+we're ignoring the `public/` directory from nodemon watch because these changes are usually driven by changes in the `src` directory.
+
+## webpack
+
+We use `webpack` To transfer the src files into a bundled file for the browser.  We create a `dev` script that runs the webpack command using `-w` and `-d` for `watch` mode and `development` mode.
+
+# Copy these files as-is (review and understand them)
+## `webpack.config.js` file
+```javascript
+module.exports = {
+  entry: './src/index.js',
+  output: {
+    path: __dirname + '/public',
+    filename: 'bundle.js'
+  },
+  module: {
+    loaders: [
+      {
+        test: /\.js$/,
+        loader: 'babel-loader'
+      }
+    ]
+  }
+};
+```
+> see explanation of this file in video ~7 minute mark.  
+[Setup and configurations](https://www.lynda.com/Express-js-tutorials/Setup-configurations/533304/557605-4.html?autoplay=true)
+
+bundle all the files into public/bundle.js
+
+
+
+## `.babelrc` file
+```javascript
+{
+  "presets": ["react", "es2015", "stage-2"]
+}
+```
+
+
+## `.eslintrc.js` file
+```javascript
+module.exports = {
+  "parser": 'babel-eslint',
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "node": true
+  },
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true,
+      "jsx": true
+    },
+    "sourceType": "module"
+  },
+  "plugins": [ "react" ],
+  "rules": {
+    "indent": ["error", 2],
+    "linebreak-style": ["error","unix"],
+    "quotes": ["error","single"],
+    "semi": ["error","always"],
+    "no-console": ["warn", { "allow": ["info", "error"] }]
+  }
+};
 ```
