@@ -74,5 +74,24 @@ git commit
 * server.js
 * webpack.config.js
 
+> Copied these files from here.
+[GitHub: jscomplete/learn-fullstack-javasript](https://github.com/jscomplete/learn-fullstack-javascript/commit/9616488753513a1db91fc2d598fabacd3a37cca0 "GitHub.com")
 
-# Node as a Web Server
+... not quite sure what they do yet.
+
+# Start building the directory structure and file placeholders
+```bash
+mkdir src
+touch src/index.js
+# All JS frontend modular code in the source directory.  This will be the source of all our generated working files.
+
+mkdir public
+touch public/index.html
+# to host all of our static assets - HTML, JavaScript, CSS.
+# The files that will actually be loading on clients.
+# Express will serve these public files directly with it's static middleware
+
+mkdir api
+touch api/index.js
+# directory for backend API server.
+```
