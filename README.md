@@ -389,23 +389,23 @@ server.listen();
 
 We'll improve this, but for a reference point for starting with Express
 ```javascript
-// so we can get the port # to run on
 import config from './config';
+import fs from 'fs';
 
 import express from 'express';
 const server = express();
 
-// to get a page
 server.get('/', (req, res) => {
   res.send('Hello Express');
 });
 
-// to get another page
+// using fs to return an html page (but we'll improve this!)
 server.get('/about', (req, res) => {
-  res.send('About page...');
+  fs.readFile('./about.html', (err, data) => {
+    res.send(data.toString());
+  });
 });
 
-// run the server
 server.listen(config.port, () => {
   console.info('Express listening on port: ', config.port);
 })
@@ -413,6 +413,36 @@ server.listen(config.port, () => {
 // run this now (can use: npm start)
 // open a browswer and access http://localhost:8080
 // "Hello Express" is printed on screen.
-// open http://localhost:8080/about and get the about response.
+// open http://localhost:8080/about and get the about HTML file.
+```
 
+
+But we'll make this a lot easier now!
+
+First, move `about.html` to the `public` directory.  
+
+Then we can get rid of the `fs` module and the extra routing for `/about`
+
+```javascript
+import config from './config';
+
+import express from 'express';
+const server = express();
+
+server.get('/', (req, res) => {
+  res.send('Hello Express');
+});
+
+// Express static middleware to serve public files
+server.use(express.static('public'));
+
+server.listen(config.port, () => {
+  console.info('Express listening on port: ', config.port);
+})
+
+// run this now (can use: npm start)
+// open a browswer and access http://localhost:8080
+// "Hello Express" is printed on screen.
+
+// Also can access any other file in the public directory like http://localhost:8080/filename
 ```

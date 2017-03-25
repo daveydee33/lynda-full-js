@@ -1,5 +1,4 @@
 import config from './config';
-import fs from 'fs';
 
 import express from 'express';
 const server = express();
@@ -8,12 +7,8 @@ server.get('/', (req, res) => {
   res.send('Hello Express');
 });
 
-// using fs to return an html page (but we'll improve this!)
-server.get('/about', (req, res) => {
-  fs.readFile('./about.html', (err, data) => {
-    res.send(data.toString());
-  });
-});
+// Express static middleware to serve public files
+server.use(express.static('public'));
 
 server.listen(config.port, () => {
   console.info('Express listening on port: ', config.port);
