@@ -498,3 +498,104 @@ server.listen(config.port, () => {
 ```
 
 open http://localhost:8080/api and get the sample data returned from /api/index.js
+
+
+So, now we know we can start serving up some static content by putting it all in the `public` directory.  And if we want to do additional routing, we can add sections for them in the `server.js` file like these examples
+
+```javascript
+server.get('/example', (req, res) => {
+  res.send('Here is some example response');
+  // or a variety of ways to do this.
+});
+```
+
+
+# Templating Engines!
+
+To dynamically render content in a static HTML view template.
+
+There are a variety available...
+
+  * EJS
+  * Handlebars
+  * Pug/Jade - syntax looks like simple text (or Python)
+  * Mustache
+  
+__Handlebars__ seems to be one of the favorites, but uses a lot of {{blah}} which may be messy for some people using Angular.
+
+__Pug/Jade__ looks clean and simple like simple text outline in plain English, or like Python or something where formatting is based on white text/indents and things.
+
+__EJS__ seems like an easy one to get started with.  Looks a little like Ruby on Rails.
+
+## Using the EJS Template Language
+
+> EJS - "Embedded JavaScript"
+
+First we need to install the module
+```bash
+npm install --save ejs
+```
+
+Then this towards top of the `server.js` file.
+
+```javascript
+server.set('view engine', 'ejs');
+```
+
+By default, Express will look for the EJS templates under `views` folder.  These EJS templates with be regular HTML files with template tags to embed JavaScript.
+
+```bash
+mkdir views
+touch views/index.ejs
+```
+
+`views/index.ejs` example with some embedded template tag.
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hello EJS</title>
+</head>
+<body>
+
+    <%= Math.random() %>
+
+</body>
+</html>
+```
+
+Then we add/change this in `server.js`
+```javascript
+server.get('/', (req, res) => {
+  res.render('index');  // if using a template, such as "views/index.ejs"
+});
+```
+
+the `res.render();` needs a parameter - the name of the template, which should be a file in `views` directory, and we don't include the file extension.
+
+For example, to render the template `views/index.ejs` we would use:
+```javascript
+res.render('index');
+```
+
+And then we can run the app and take a look.  The landing page should just generate a random number on screen.  You can refresh and see the number change.
+
+To expand on the `server.js` file, let's pass some variables to the view template by passing an object as the second parameter in the `render()` method.
+
+`server.js`
+```javascript
+  // adding some variables to pass to the template by passing an object as the second parameter
+  res.render('index', {
+    content: 'Hello Express and <em>EJS</em>!',
+  });
+```
+
+`index.ejs`
+```html
+<%- content %>
+```
+
+Note the difference if we pass a string containing HTML, if we use a '-' vs a '=' in the EJS tag.
+If we use the equals symbol, it will encode it and we'll see the HTML tags as text.  If we use the dash, it will be treated as HTML.
+
