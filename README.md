@@ -844,5 +844,25 @@ ReactDOM.render(
 );
 ```
 
-## Side tip!  Use the React tool in Chrome Dev Tools!
+## > Side tip!  Use the React tool in Chrome Dev Tools!
 
+## Components with Modules - Break `index.js` out into separate Components files
+
+Existing
+  * src/index.js
+
+Creating
+  * src/components/Header.js
+  * src/components/App.js
+
+When we move the Header stuff to a new `Header.js` file, we need to add the `import` statements at the top of the file as well as add something like this at the end of the file too.
+
+```javascript
+export default Header;
+```
+
+Now also in `App.js` we now need to import the `Header` dependency from the external `Header.js` file
+
+```javascript
+import Header from './Header';
+```
