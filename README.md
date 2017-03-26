@@ -730,4 +730,77 @@ var head = document.getElementById('header');
 var head.className = "text-center";
 ```
 
+# Side Note!  JSHint, JSCS, JSLint, ESLint
+So I had previously installed the VS Code plugins JSHint and JSCS - and they helped a bit but I was getting a lot of errors and most of them were pretty hard to understand.
+
+I just disabled those two, and replaced it with the ESLint plugin and it seems to be much better! :)
+Seems like the errors are easier to understand too!
+
+
 ## React Components
+I should review and understand this stuff better...
+
+index.js
+```javascript
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+const App = (props) => {
+  return (
+      <h2 className="text-center">
+          {props.headerMessage}
+      </h2>
+  );
+};
+
+App.propTypes = {
+  headerMessage: React.PropTypes.string
+};
+
+ReactDOM.render(
+    <App headerMessage="Hello props!" />,
+    document.getElementById('root')
+);
+```
+
+It's starting to make more sense now!
+
+> I put these things in `<span>` and `<div>` because it didn't seem to like them on their own,
+
+```javascript
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+// here we define the component.
+// prop will be the object properties if we need to pass it some variables and use them in the component
+const App = (props) => {
+  return (
+      <div className="text-center">
+        <h2>
+            {props.headerMessage}
+        </h2>
+        <span>{props.headerDesc}</span>
+        <span>{props.headerBlah}</span>
+      </div>
+  );
+};
+
+// Prop validations.  This is doing the validation
+// Here we can set the property name and the type as a key:value pair.
+// if using 'isRequired' then a value must be passed, or we can use the defaults, see 'defaultProps'
+App.propTypes = {
+  headerMessage: React.PropTypes.string.isRequired,
+  headerDesc: React.PropTypes.string,
+  headerBlah: React.PropTypes.string,
+};
+
+// Here we can define default values if not passed.
+App.defaultProps = {
+  headerBlah: 'some default text if not passed below...',
+};
+
+ReactDOM.render(
+    <App headerMessage="React Components!" headerDesc="This is a description..." />,   // Will get an error if we pass something other than string, because we use the validation in propTypes
+    document.getElementById('root')
+);
+```
