@@ -636,3 +636,98 @@ We're going to pull apart our `index.ejs` file and create a `header.ejs` and `fo
 # Adding Bootstrap to the EJS template header and footer
 This part probably wasn't the best way to go about it, but not knowing the best way to do it, I just addeded links to the CDN for Bootstrap css and js files in the `header.ejs` and `footer.ejs` files.
 
+
+
+# Front End - React
+
+* src/index.js
+
+This is where we'll put code to start working with React
+
+`src/index.js`
+```javascript
+import React from 'react';
+import ReactDom from 'react-dom';
+
+ReactDOM.render(
+    React.createElement(h1, null, 'Hello React!'),
+    document.getElementById('root')
+);
+```
+
+Since we're going to attach this to an HTML element with id "root" we need to create that element and id in the `index.ejs` view template
+
+```html
+<%- include('header') %>
+  <div id="root">
+      <%- content %>
+  </div>
+<%- include('footer') %>
+```
+
+The `dev` script was what we created in the `package.json` file to run `webpack` to generate the `bundle.js` file with our React code  `public/bundle.js` and `public/bundle.js.map` in the `public` directory.
+```bash
+npm run dev
+```
+
+And then since this new `bundle.js` file is created now, we need to include reference to it in our view index.. we'll add this towards the bottom of `views/footer.ejs`  just before the closing ```</body>``` tag.  
+
+### `footer.js`
+```
+<script src="/bundle.js" charset="utf-8"></script>
+
+</body>
+</html>
+```
+
+React with JavaScript
+```javascript
+ReactDOM.render(
+    React.createElement('h1', null, 'Hello React!'),
+    document.getElementById('root')
+);
+```
+
+React with JSX
+```javascript
+ReactDOM.render(
+    <h1>Hello React! {Math.random()}</h1>,
+    document.getElementById('root')
+);
+```
+
+React with JSX and JavaScript variables
+```javascript
+const color = Math.random() > 0.5 ? 'green' : 'red';
+
+ReactDOM.render(
+    <div>
+    <h1>Hello React!</h1>
+    <h2 style={{color: color}}>Random color</h2>
+    <h2>Random Number: { Math.random() }</h2>
+    </div>
+    ,
+    document.getElementById('root')
+);
+```
+
+JSX is very similar to HTML, but watch for some of these things...
+
+In HTML:
+```html
+<h1 class="text-center">Title</h1>
+```
+
+in JSX:
+```html
+<h1 className="text-center">Title</h1>
+```
+
+In JSX we have to do `className` because that's how it is in the DOM API.  
+eg.
+```javascript
+var head = document.getElementById('header');
+var head.className = "text-center";
+```
+
+## React Components
