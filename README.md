@@ -765,7 +765,7 @@ ReactDOM.render(
 
 It's starting to make more sense now!
 
-> I put these things in `<span>` and `<div>` because it didn't seem to like them on their own,
+> We have to put everything in one containing `<div>`.  Has to be contained in one single element
 
 ```javascript
 import React from 'react';
@@ -804,3 +804,45 @@ ReactDOM.render(
     document.getElementById('root')
 );
 ```
+
+Now we're just modifying it more to make it easier to read and easier to re-use the Header component and the App component.  Good to learn the previous one first.
+```javascript
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+// here we define the components.
+// now in Header we can destructure {message} so we don't need to use props.headerMessage.
+
+// now the Header component is more readable and re-usable and we'll use it to compose the App component, to also make that easier to read and more reusable
+
+const Header = ( { message } ) => {
+  return (
+      <h2>
+          {message}
+      </h2>
+  );
+};
+
+Header.propTypes = {
+  message: React.PropTypes.string
+};
+
+const App = () => {
+  return (
+      <div>
+        <Header message="Naming Contests" />
+        <div>
+          ...
+        </div>
+      </div>
+  );
+};
+
+ReactDOM.render(
+  <App />,
+  document.getElementById('root')
+);
+```
+
+## Side tip!  Use the React tool in Chrome Dev Tools!
+
