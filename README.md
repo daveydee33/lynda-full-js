@@ -632,3 +632,7 @@ We're going to pull apart our `index.ejs` file and create a `header.ejs` and `fo
 ```
 
 > See [EJS Docs](http://ejs.co/#docs)
+
+# Adding Bootstrap to the EJS template header and footer
+This part probably wasn't the best way to go about it, but not knowing the best way to do it, I just addeded links to the CDN for Bootstrap css and js files in the `header.ejs` and `footer.ejs` files.
+
