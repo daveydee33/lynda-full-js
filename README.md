@@ -518,12 +518,12 @@ There are a variety available...
 
   * EJS
   * Handlebars
-  * Pug/Jade - syntax looks like simple text (or Python)
+  * Pug (previously: Jade) - syntax looks like simple text (or Python)
   * Mustache
   
-__Handlebars__ seems to be one of the favorites, but uses a lot of {{blah}} which may be messy for some people using Angular.
+__Handlebars__ seems to be one of the favorites, but uses a lot of {{these}} which may be messy for some people using Angular.  One of the favorites.
 
-__Pug/Jade__ looks clean and simple like simple text outline in plain English, or like Python or something where formatting is based on white text/indents and things.
+__Pug/Jade__ looks clean and simple like simple text outline in plain English, or like Python or something where formatting is based on white text/indents and things.  One of the most popular.
 
 __EJS__ seems like an easy one to get started with.  Looks a little like Ruby on Rails.
 
@@ -599,3 +599,36 @@ To expand on the `server.js` file, let's pass some variables to the view templat
 Note the difference if we pass a string containing HTML, if we use a '-' vs a '=' in the EJS tag.
 If we use the equals symbol, it will encode it and we'll see the HTML tags as text.  If we use the dash, it will be treated as HTML.
 
+> "git it and commit it!" --dave :)
+
+
+## More EJS templating to create header and footer templates.
+
+We're going to pull apart our `index.ejs` file and create a `header.ejs` and `footer.ejs` and `include` references to those in the `index.ejs` file.
+
+`header.ejs`
+```html header.ejs
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hello EJS</title>
+</head>
+<body>
+```
+
+`index.ejs`
+```html header.ejs
+<%- include('header') %>
+  <%- content %>
+  <%= Math.random() %>
+<%- include('footer') %>
+```
+
+`footer.ejs`
+```html header.ejs
+</body>
+</html>
+```
+
+> See [EJS Docs](http://ejs.co/#docs)
