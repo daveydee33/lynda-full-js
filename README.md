@@ -866,3 +866,130 @@ Now also in `App.js` we now need to import the `Header` dependency from the exte
 ```javascript
 import Header from './Header';
 ```
+
+
+> Troubleshooting the error about the missing `bundle.js` file.  I just cloned the repo from this point and launched the application and it worked, but wasn't loading my React elements.  No error or anything but in the Chrome console I saw an error about `bundle.js` not found.  Anyway, after awhile of troubleshooting, I realized that when doing a clone of the repo in a new environment you need to do this.  (after cloning the repo or unzipping it or whatever).
+
+```bash
+npm install # to download all of the dependencies to the node_modules dir that we have noted in package.json (since we're not putting these in git)
+npm run dev # because...  this is what I was missing (see the note about this line).
+# ... then open a sepate terminal window to keep this one running
+npm start
+```
+
+
+## Component state
+Will come back and review again later.  #TODO
+
+## Component life cycle
+Will come back and review again later.  #TODO
+
+
+# Working with Data
+## Loading the test data
+* added `src/testData.json`
+
+> see: 4.1-begin
+
+### Create `src/testData.json`
+
+```json
+{
+  "contests": [
+    {
+      "id": 1,
+      "categoryName": "Business/Company",
+      "contestName": "Cognitive Building Bricks"
+    },
+    {
+      "id": 2,
+      "categoryName": "Magazine/Newsletter",
+      "contestName": "Educating people about sustainable food production"
+    },
+    {
+      "id": 3,
+      "categoryName": "Software Component",
+      "contestName": "Big Data Analytics for Cash Circulation"
+    },
+    {
+      "id": 4,
+      "categoryName": "Website",
+      "contestName": "Free programming books"
+    }
+  ]
+}
+```
+
+We need a way for `webpack` to install JSON files.  So we need to install `json-loader` and configure webpack for it.
+
+
+### Install `json-loader`
+```bash
+npm install --save json-loader
+```
+
+### Configure `webpack` with `json-loader`
+
+add this...
+```javascript
+      {
+        test: /\.json$/,
+        loader: 'json-loader'
+      }
+```
+
+...to `webpack.config.js`
+```javascript
+module.exports = {
+  entry: './src/index.js',
+  output: {
+    path: __dirname + '/public',
+    filename: 'bundle.js'
+  },
+  module: {
+    loaders: [
+      {
+        test: /\.js$/,
+        loader: 'babel-loader'
+      },
+      {
+        test: /\.json$/,
+        loader: 'json-loader'
+      }
+    ]
+  }
+};
+```
+
+And then kill and restart the 2 processes
+```bash
+npm run dev
+npm start
+```
+
+Now we can import this into our `index.js` file and test reading it and writing it to the console.  
+
+> Open the browser and the Chrome Dev tools.  See that we can explore the data object from the console.
+
+
+We can also pass the data, see what we added to the <App /> line.  Though we haven't done anything with it yet.
+```javascript
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+// bringing in some test JSON data.
+// see: testData.json
+// also needed to add json to the webpack.config.js, and re-run: 'npm run dev'.
+import data from './testData';
+// we can write it to the command line (to explore the data objects)
+console.log(data);
+
+// moving the components to their own files - see Header.js and App.js
+import App from './components/App';
+
+ReactDOM.render(
+  <App contest={data.contests} />, // we can pass the new data like this
+  document.getElementById('root')
+);
+```
+
