@@ -879,10 +879,156 @@ npm start
 
 
 ## Component state
-Will come back and review again later.  #TODO
 
-## Component life cycle
-Will come back and review again later.  #TODO
+Will come back and review again later.  (#TODO  Review video 3.React Basic - Component state.)
+
+Our previous components were stateless (because we cannot use the React state with these components) so we create them with functions.
+
+Using a function - if the component does __not__ need state.
+`App.js (normal - stateless)`
+```javascript
+import React from 'react';
+import Header from './Header';
+
+// Standard - FUNCTION component (stateless)
+const App = () => {
+  return (
+      <div className="App">
+        <Header message="Standard...." />
+        <div>
+          ...
+        </div>
+      </div>
+  );
+};
+
+export default App;
+```
+
+Compare that with a __dynamic__ React component - where we have state.  Only use these form if we need _state_ or the _life cycle method_ which we'll see enxt.
+`App.js (dynamic)`
+```javascript
+import React from 'react';
+import Header from './Header';
+
+// Dynamic - CLASS-based component (with state).
+class App extends React.Component {
+  render() {
+    return (
+      <div className="App">
+        <Header message="Dynamic..." />
+        <div>
+          ...
+        </div>
+      </div>
+    );
+  }
+};
+
+export default App;
+```
+
+Now we can introduce state.
+```javascript
+import React from 'react';
+import Header from './Header';
+
+// Dynamic - CLASS-based component (with state).
+class App extends React.Component {
+
+  // now we can introduce state.  here, and in the HTML part.
+  pageHeader = { test: "Blah" };
+
+  render() {
+    return (
+      <div className="App">
+        <Header message={this.state.pageHeader} />
+        <div>
+          ...
+        </div>
+      </div>
+    );
+  }
+};
+
+export default App;
+```
+
+## Component life cycle (probably can skip this demo)
+Will come back and review again later.  (#TODO Review 3.React Basic - Component life cycle.)
+
+`App.js` - Added the `componentDidMount()` and `componentWillUnmount` methods.
+```javascript
+import React from 'react';
+import Header from './Header';
+import ContestPreview from './ContestPreview';
+
+class App extends React.Component {
+  state = {
+    pageHeader: 'Naming Contests'
+  };
+  componentDidMount() {
+    // timers, listensers
+    console.log('did mount');
+    debugger;
+  }
+  componentWillUnmount() {
+    // clean timers, listeners
+    console.log('will unmount');
+    debugger;
+  }
+  render() {
+    return (
+      <div>
+        <Header message={this.state.pageHeader} />
+        <div>
+          ...
+        </div>
+      </div>
+    );
+  }
+}
+```
+
+...and...
+
+`index.js` - Add the `setTimeout()` method at the bottom, just for testing.
+```javascript
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+// bringing in some test JSON data.
+// see: testData.json
+// also needed to add json to the webpack.config.js, and re-run: 'npm run dev'.
+import data from './testData';
+// we can write it to the command line (to explore the data objects)
+console.log(data);
+
+// moving the components to their own files - see Header.js and App.js
+import App from './components/App';
+
+ReactDOM.render(
+  <App contest={data.contests} />, // we can pass the new data like this
+  document.getElementById('root')
+);
+
+
+
+// Testing Component life cycle
+
+setTimeout(() => {
+  ReactDOM.render(
+    <h2>....</h2>,
+    document.getElementById('root')
+  );
+}, 4000);
+```
+
+// check out the Chrome Console now.  We can change the title like this.
+// $r.setState( {pageHeader: "Blah"} )
+
+export default App;
+```
 
 
 # Working with Data
@@ -972,7 +1118,7 @@ Now we can import this into our `index.js` file and test reading it and writing 
 > Open the browser and the Chrome Dev tools.  See that we can explore the data object from the console.
 
 
-We can also pass the data, see what we added to the <App /> line.  Though we haven't done anything with it yet.
+We can also pass the data, see what we added to the <App /> line.  Though we haven't done anything with it yet, we can see it if we use the React Dev Tools in Chrome.
 ```javascript
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -993,3 +1139,9 @@ ReactDOM.render(
 );
 ```
 
+
+## Displaying a list of objects
+> use the React Dev Tools in Chrome to see that the App element contains the data now.
+
+Create a new file `ContestPreview.js`
+* ContestPreview.js

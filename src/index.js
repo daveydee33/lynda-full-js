@@ -15,3 +15,12 @@ ReactDOM.render(
   <App contest={data.contests} />, // we can pass the new data like this
   document.getElementById('root')
 );
+
+
+// Testing Component life cycle
+setTimeout(() => {
+  ReactDOM.render(
+    <h2>....</h2>,
+    document.getElementById('root')
+  );
+}, 4000);
