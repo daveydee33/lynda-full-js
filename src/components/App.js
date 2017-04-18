@@ -8,25 +8,33 @@ class App extends React.Component {
   };
   componentDidMount() {
     // timers, listensers
-    console.log('did mount');
-    debugger;
   }
   componentWillUnmount() {
     // clean timers, listeners
-    console.log('will unmount');
-    debugger;
   }
   render() {
     return (
       <div>
         <Header message={this.state.pageHeader} />
         <div>
+          <p><b>Using the 'spread' operator to display just the first object in the array (first element)</b></p>
+          <ContestPreview {...this.props.contests[0]} />
           ...
+          <p><b>Now using 'map' for loop through the array</b></p>
+          {/* using 'map' to loop through the array */}
+          {this.props.contests.map(contest => 
+            <ContestPreview {...contest} />
+          )}
         </div>
       </div>
     );
   }
 }
+// Note here that we're using the spread operator (...).
+// Also note that for testing, we're just passing 1 object (the first object in the array)
+// ? -> Need to review and understand the 'spread' operator, and 'map' for arrays
+
+
 
 // check out the Chrome Console now.  We can change the title like this.
 // $r.setState( {pageHeader: "Blah"} )

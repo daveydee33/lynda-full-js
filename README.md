@@ -1022,13 +1022,13 @@ setTimeout(() => {
     document.getElementById('root')
   );
 }, 4000);
-```
-
-// check out the Chrome Console now.  We can change the title like this.
-// $r.setState( {pageHeader: "Blah"} )
 
 export default App;
 ```
+
+> check out the Chrome Console now.  We can change the title like this.
+> $r.setState( {pageHeader: "Blah"} )
+
 
 
 # Working with Data
@@ -1130,6 +1130,8 @@ import data from './testData';
 // we can write it to the command line (to explore the data objects)
 console.log(data);
 
+// or even better, just look the data in the React Dev Tools.  You can explore this object and the 4 objects in the sample array
+
 // moving the components to their own files - see Header.js and App.js
 import App from './components/App';
 
@@ -1145,3 +1147,10 @@ ReactDOM.render(
 
 Create a new file `ContestPreview.js`
 * ContestPreview.js
+
+> #TODO:
+> In this section, just review the updates to `index.js`, `App.js`, and the new `ContestPreview.js` as well as the sample data in `testData.json`.
+
+> I'm just getting too tired to write up the notes right now.  :/
+
+> I also need to review 'spread operator' and 'map' to understand this section better.
